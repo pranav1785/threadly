@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800&family=Rubik:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #2563EB;
+  --primary-light: #60A5FA;
+  --cta: #F97316;
+  --accent: #F43F5E;
+  --surface: #F8FAFC;
+  --text: #1E293B;
+  --muted: #94A3B8;
+  --border: #E2E8F0;
+  --card-bg: #FFFFFF;
+  --navbar-h: 64px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0F172A;
+    --text: #F1F5F9;
+    --card-bg: #1E293B;
+    --border: #334155;
+    --muted: #64748B;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Rubik', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content link for a11y */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: auto;
+  height: auto;
+  padding: 8px 16px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  z-index: 9999;
+  font-weight: 600;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #2563EB, #F97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Particle canvas */
+#particles-js {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Product card */
+.product-card {
+  @apply bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer hover:-translate-y-1;
+}
+
+/* Platform badge */
+.platform-badge {
+  @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold;
+}
+
+/* Navbar blur */
+.navbar-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Bento grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-primary-600 text-primary-600 hover:bg-primary-50 font-semibold rounded-xl transition-all duration-200 cursor-pointer;
+  }
+  .btn-cta {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-cta hover:bg-orange-600 text-white font-semibold rounded-xl transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-white text-gray-900 placeholder-muted focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-card p-6;
+  }
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-50 text-primary-700;
+  }
+}
