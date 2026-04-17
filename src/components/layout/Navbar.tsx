@@ -39,11 +39,11 @@ export default function Navbar() {
     <header className="navbar-blur fixed top-0 left-0 right-0 z-50 h-16" role="banner">
       <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link href={user ? (role === "retailer" ? "/retailer/dashboard" : "/home") : "/"} className="flex items-center gap-2 flex-shrink-0" aria-label="Threadly Home">
-          <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" aria-hidden="true" />
+        <Link href={user ? (role === "retailer" ? "/retailer/dashboard" : "/home") : "/"} className="flex items-center gap-3 flex-shrink-0 group" aria-label="Threadly Home">
+          <div className="w-10 h-10 bg-primary rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+            <Sparkles className="w-6 h-6 text-white" aria-hidden="true" />
           </div>
-          <span className="font-heading font-800 text-xl text-gray-900 hidden sm:block">Threadly</span>
+          <span className="font-heading font-800 text-2xl tracking-tighter text-gray-900 hidden sm:block">Threadly</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -69,12 +69,12 @@ export default function Navbar() {
         )}
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           {!user ? (
-            <>
-              <Link href="/auth" className="btn-secondary text-sm py-2 px-4 hidden sm:flex">Sign In</Link>
-              <Link href="/auth?mode=signup" className="btn-primary text-sm py-2 px-4">Get Started</Link>
-            </>
+            <div className="flex items-center gap-3">
+              <Link href="/auth" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors">Sign In</Link>
+              <Link href="/auth?bypass=true" className="btn-primary text-sm py-2.5 px-6 rounded-full font-800 shadow-glow">Get Started</Link>
+            </div>
           ) : (
             <>
               <Link href={role === "retailer" ? "/retailer/dashboard" : "/requests"} className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Requests">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/context/AuthContext";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -57,8 +58,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`font-body antialiased`}>
-        <a href="#main-content" className="skip-link">Skip to main content</a>
-        {children}
+        <AuthProvider>
+          <a href="#main-content" className="skip-link">Skip to main content</a>
+          {children}
+        </AuthProvider>
         <Toaster
           position="top-right"
           toastOptions={{

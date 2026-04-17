@@ -36,21 +36,21 @@ export default function ProductDetailPage() {
   }, [id, user, router]);
 
   const toggleWishlist = async () => {
-    if (!user) { router.push("/auth"); return; }
+    // if (!user) { router.push("/auth"); return; }
     if (wishlisted) {
-      const snap = await getDocs(query(collection(db, "wishlists"), where("userId", "==", user.uid), where("productId", "==", product!.id)));
+      const snap = await getDocs(query(collection(db, "wishlists"), where("userId", "==", user?.uid || "guest"), where("productId", "==", product!.id)));
       snap.docs.forEach(d => deleteDoc(doc(db, "wishlists", d.id)));
       setWishlisted(false); toast.success("Removed from wishlist");
     } else {
-      await addDoc(collection(db, "wishlists"), { userId: user.uid, productId: product!.id, product, addedAt: serverTimestamp(), alertEnabled: true });
+      await addDoc(collection(db, "wishlists"), { userId: user?.uid || "guest", productId: product!.id, product, addedAt: serverTimestamp(), alertEnabled: true });
       setWishlisted(true); toast.success("Added to wishlist!");
     }
   };
 
   const setRestock = async () => {
-    if (!user) { router.push("/auth"); return; }
+    // if (!user) { router.push("/auth"); return; }
     setRequesting(true);
-    await addDoc(collection(db, "alerts"), { userId: user.uid, type: "restock", productId: product!.id, productName: product!.name, message: `Alert set for ${product!.name}`, read: false, createdAt: serverTimestamp() });
+    await addDoc(collection(db, "alerts"), { userId: user?.uid || "guest", type: "restock", productId: product!.id, productName: product!.name, message: `Alert set for ${product!.name}`, read: false, createdAt: serverTimestamp() });
     setAlertSet(true); toast.success("Restock alert set! We'll notify you immediately.");
     setRequesting(false);
   };
@@ -80,10 +80,10 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Images */}
           <div className="space-y-4">
-            <motion.div className="relative h-96 bg-gray-50 rounded-3xl overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <Image src={product.imageURL} alt={product.name} fill className="object-contain p-8" sizes="(max-width: 1024px) 100vw, 50vw" priority />
+            <motion.div className="relative h-[450px] bg-white border border-gray-100 shadow-card rounded-[2.5rem] overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <Image src={product.imageURL} alt={product.name} fill className="object-contain p-12" sizes="(max-width: 1024px) 100vw, 50vw" priority />
               {product.discount && (
-                <span className="absolute top-4 left-4 bg-accent text-white text-sm font-bold px-3 py-1.5 rounded-xl">-{product.discount}%</span>
+                <span className="absolute top-6 left-6 bg-accent text-white text-sm font-bold px-4 py-2 rounded-2xl shadow-lg">-{product.discount}% OFF</span>
               )}
             </motion.div>
           </div>
@@ -91,13 +91,13 @@ export default function ProductDetailPage() {
           {/* Details */}
           <div className="space-y-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="platform-badge" style={{ backgroundColor: `${PLATFORM_COLORS[product.platform]}20`, color: PLATFORM_COLORS[product.platform] }}>
-                  {product.platform.charAt(0).toUpperCase() + product.platform.slice(1)}
+              <div className="flex items-center gap-2 mb-4">
+                <span className="px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm" style={{ backgroundColor: `${PLATFORM_COLORS[product.platform]}15`, color: PLATFORM_COLORS[product.platform] }}>
+                  {product.platform}
                 </span>
                 <span className="tag text-xs">{product.category}</span>
               </div>
-              <h1 className="font-heading text-2xl md:text-3xl font-bold text-gray-900">{product.name}</h1>
+              <h1 className="font-heading text-3xl md:text-5xl font-800 tracking-tight text-gray-900 leading-tight">{product.name}</h1>
               {product.brand && <p className="text-muted mt-1">by <span className="font-medium text-gray-700">{product.brand}</span></p>}
             </div>
 

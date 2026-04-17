@@ -31,7 +31,7 @@ export default function RetailerDashboard() {
   const router = useRouter();
   const [stats, setStats] = useState({ products: 0, requests: 0, messages: 0, views: 0 });
 
-  useEffect(() => { if (!loading && !user) router.push("/auth"); }, [user, loading, router]);
+  // useEffect(() => { if (!loading && !user) router.push("/auth"); }, [user, loading, router]);
 
   useEffect(() => {
     if (!user) return;
@@ -90,15 +90,15 @@ export default function RetailerDashboard() {
               <AreaChart data={CHART_DATA} aria-label="Weekly store views area chart">
                 <defs>
                   <linearGradient id="viewGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2563EB" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#4285F4" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#4285F4" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="day" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #E2E8F0" }} />
-                <Area type="monotone" dataKey="views" stroke="#2563EB" fill="url(#viewGrad)" strokeWidth={2} />
+                <Area type="monotone" dataKey="views" stroke="#4285F4" fill="url(#viewGrad)" strokeWidth={2} />
               </AreaChart>
             </ResponsiveContainer>
           </section>
@@ -112,7 +112,7 @@ export default function RetailerDashboard() {
                 <XAxis dataKey="day" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #E2E8F0" }} />
-                <Bar dataKey="requests" fill="#F97316" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="requests" fill="#FBBC05" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </section>

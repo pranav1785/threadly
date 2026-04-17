@@ -19,7 +19,7 @@ export default function ProductCard({ product, onWishlist, isWishlisted, classNa
 
   return (
     <article
-      className={cn("product-card overflow-hidden group", className)}
+      className={cn("bg-white rounded-[2rem] border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden group", className)}
       onClick={() => router.push(`/product/${product.id}`)}
       role="link"
       tabIndex={0}
@@ -27,7 +27,7 @@ export default function ProductCard({ product, onWishlist, isWishlisted, classNa
       aria-label={`${product.name} - ${formatPrice(product.price)}`}
     >
       {/* Image */}
-      <div className="relative h-52 bg-gray-50 overflow-hidden">
+      <div className="relative h-60 bg-gray-50 overflow-hidden m-2 rounded-[1.5rem]">
         <Image
           src={product.imageURL}
           alt={product.name}
@@ -65,8 +65,8 @@ export default function ProductCard({ product, onWishlist, isWishlisted, classNa
       <div className="p-4 space-y-2">
         {/* Platform */}
         <div className="flex items-center justify-between">
-          <span className="platform-badge" style={{ backgroundColor: `${PLATFORM_COLORS[product.platform]}20`, color: PLATFORM_COLORS[product.platform] }}>
-            {product.platform.charAt(0).toUpperCase() + product.platform.slice(1)}
+          <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: `${PLATFORM_COLORS[product.platform]}15`, color: PLATFORM_COLORS[product.platform] }}>
+            {product.platform}
           </span>
           {product.rating && (
             <div className="flex items-center gap-1 text-xs text-amber-600" aria-label={`Rating: ${product.rating} out of 5`}>

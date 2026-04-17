@@ -134,6 +134,8 @@ export async function searchProducts(
     sortBy?: "price_asc" | "price_desc" | "rating" | "discount";
   }
 ): Promise<Product[]> {
+  // Simulate network delay
+  await new Promise(r => setTimeout(r, 600 + Math.random() * 800));
   const q = query.toLowerCase();
   let results = MOCK_PRODUCTS.filter(p => {
     const matchesQuery = !q ||

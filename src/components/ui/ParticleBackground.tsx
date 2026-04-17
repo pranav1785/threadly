@@ -6,7 +6,7 @@ interface ParticleConfig {
   count?: number;
 }
 
-export default function ParticleBackground({ color = "#3B82F6", count = 60 }: ParticleConfig) {
+export default function ParticleBackground({ color = "#4285F4", count = 60 }: ParticleConfig) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

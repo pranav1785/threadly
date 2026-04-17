@@ -41,49 +41,56 @@ export default function LandingPage() {
   return (
     <main id="main-content">
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white" aria-labelledby="hero-heading">
-        <ParticleBackground color="#3B82F6" count={80} />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-8 py-20">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-yellow-400" aria-hidden="true" /> Powered by Google Gemini AI
-            </span>
+      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-white text-gray-900" aria-labelledby="hero-heading">
+        <ParticleBackground color="#4285F4" count={60} />
+        
+        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-10 py-20">
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-sm font-semibold text-primary-700 shadow-sm">
+              <Sparkles className="w-4 h-4" aria-hidden="true" /> Agentic Shopping Discovery
+            </div>
           </motion.div>
 
-          <motion.h1 id="hero-heading" className="font-heading text-5xl sm:text-6xl lg:text-7xl font-800 leading-tight" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            Find Anything,<br />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-orange-400 bg-clip-text text-transparent">Anywhere</span>
+          <motion.h1 id="hero-heading" className="font-heading text-5xl sm:text-7xl font-800 tracking-tight text-gray-900" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            One search for <br />
+            <span className="text-primary-600">everything you want</span>
           </motion.h1>
 
-          <motion.p className="text-xl text-blue-100/80 max-w-2xl mx-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-            Universal product discovery across Amazon, Flipkart, Meesho, Myntra and 50,000+ local stores.
+          <motion.p className="text-xl text-muted max-w-2xl mx-auto font-medium" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+            Search Amazon, Flipkart, Myntra, and 50,000+ local store inventories in a single click.
           </motion.p>
 
-          <motion.form onSubmit={handleSearch} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-2xl mx-auto">
-            <div className="flex items-center rounded-2xl bg-white/10 border-2 border-white/20 hover:border-blue-400 transition-all backdrop-blur-md">
-              <Search className="absolute ml-4 w-5 h-5 text-blue-300" aria-hidden="true" />
+          <motion.form onSubmit={handleSearch} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-3xl mx-auto w-full">
+            <div className="group flex items-center rounded-3xl bg-white border border-gray-200 shadow-card hover:shadow-card-hover transition-all duration-300 p-2 pl-6">
+              <Search className="w-5 h-5 text-gray-400 mr-4" aria-hidden="true" />
               <label htmlFor="hero-search" className="sr-only">Search products</label>
-              <input id="hero-search" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder='Try "Sony headphones" or "white shirt for office"' className="flex-1 py-4 pl-12 pr-4 bg-transparent text-white placeholder-blue-200/60 outline-none" autoComplete="off" />
-              <button type="submit" className="m-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-400 text-white font-semibold rounded-xl transition-colors flex items-center gap-2 cursor-pointer text-sm">
-                Search <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              <input 
+                id="hero-search" 
+                type="search" 
+                value={q} 
+                onChange={e => setQ(e.target.value)} 
+                placeholder='Try "Sony WH-1000XM5" or "Summer wedding dress"' 
+                className="flex-1 py-4 bg-transparent text-gray-900 placeholder-gray-400 outline-none text-lg" 
+                autoComplete="off" 
+              />
+              <button type="submit" className="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-2xl transition-all flex items-center gap-2 cursor-pointer shadow-md">
+                Find Products <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
-            <div className="flex flex-wrap gap-2 justify-center mt-3">
-              {["iPhone 15", "Nike shoes", "Samsung TV", "Yoga mat"].map(s => (
-                <button key={s} type="button" onClick={() => setQ(s)} className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-blue-200 border border-white/15 cursor-pointer transition-colors">{s}</button>
+            <div className="flex flex-wrap gap-2 justify-center mt-5">
+              <span className="text-sm text-muted mr-2 self-center">Trending:</span>
+              {["iPhone 15", "Nike Dunk", "Air Fryer", "Self-help books"].map(s => (
+                <button key={s} type="button" onClick={() => setQ(s)} className="text-sm px-4 py-2 rounded-xl bg-gray-50 hover:bg-blue-50 text-gray-600 hover:text-primary-700 border border-gray-100 cursor-pointer transition-all">{s}</button>
               ))}
             </div>
           </motion.form>
 
-          <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-            <Link href="/auth?mode=signup" className="btn-cta text-base py-3.5 px-8">
-              <ShoppingBag className="w-5 h-5" aria-hidden="true" /> Start Shopping Free
+          <motion.div className="flex flex-col sm:flex-row gap-4 justify-center pt-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+            <Link href="/search" className="btn-primary text-base py-4 px-10 rounded-2xl">
+              <ShoppingBag className="w-5 h-5" aria-hidden="true" /> Start Exploring
             </Link>
-            <Link href="/auth?role=retailer&mode=signup" className="inline-flex items-center gap-2 px-8 py-3.5 bg-white/10 border-2 border-white/30 text-white hover:bg-white/20 font-semibold rounded-xl transition-all cursor-pointer">
-              <Store className="w-5 h-5" aria-hidden="true" /> List Your Store
+            <Link href="/stores" className="inline-flex items-center gap-2 px-10 py-4 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 font-bold rounded-2xl transition-all cursor-pointer shadow-sm">
+              <Store className="w-5 h-5" aria-hidden="true" /> Local Stores
             </Link>
           </motion.div>
         </div>
@@ -118,11 +125,11 @@ export default function LandingPage() {
             <h2 id="trending-heading" className="font-heading text-3xl font-bold text-gray-900 flex items-center gap-2">
               <TrendingUp className="w-7 h-7 text-primary-600" aria-hidden="true" /> Trending Now
             </h2>
-            <Link href="/auth" className="flex items-center gap-1 text-primary-600 font-medium text-sm hover:underline cursor-pointer">View all <ChevronRight className="w-4 h-4" aria-hidden="true" /></Link>
+            <Link href="/search" className="flex items-center gap-1 text-primary-600 font-medium text-sm hover:underline cursor-pointer">View all <ChevronRight className="w-4 h-4" aria-hidden="true" /></Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {TRENDING.map(p => (
-              <Link key={p.name} href="/auth" className="group bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden cursor-pointer hover:-translate-y-1">
+              <Link key={p.name} href={`/search?q=${encodeURIComponent(p.name)}`} className="group bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden cursor-pointer hover:-translate-y-1">
                 <div className="relative h-48 overflow-hidden">
                   <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   <span className="absolute top-3 left-3 bg-accent text-white text-xs font-bold px-2 py-1 rounded-lg">-{p.discount}%</span>
@@ -160,8 +167,8 @@ export default function LandingPage() {
         <h2 id="cta-heading" className="font-heading text-4xl font-bold mb-4">Ready to find anything?</h2>
         <p className="text-blue-100 mb-8 max-w-lg mx-auto">Join 500,000+ smart shoppers already using Threadly.</p>
         <div className="flex gap-4 justify-center flex-wrap">
-          <Link href="/auth?mode=signup" className="px-8 py-4 bg-white text-primary-700 font-bold rounded-xl hover:bg-blue-50 transition-colors cursor-pointer flex items-center gap-2 shadow-lg">
-            <Sparkles className="w-5 h-5" aria-hidden="true" /> Get Started Free
+          <Link href="/auth?bypass=true" className="px-8 py-4 bg-white text-primary-700 font-bold rounded-xl hover:bg-blue-50 transition-colors cursor-pointer flex items-center gap-2 shadow-lg">
+            <Sparkles className="w-5 h-5" aria-hidden="true" /> Start Exploring Free
           </Link>
         </div>
       </section>

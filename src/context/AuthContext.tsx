@@ -30,6 +30,7 @@ interface AuthContextType {
   signUpEmail: (email: string, password: string, name: string, role: UserRole) => Promise<void>;
   logout: () => Promise<void>;
   refreshProfile: () => Promise<void>;
+  signInAsGuest: (role: UserRole) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -60,9 +61,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
-      setUser(u);
-      if (u) await fetchProfile(u);
-      else { setProfile(null); setRole(null); setRetailerProfile(null); }
+      if (u) {
+        setUser(u);
+        await fetchProfile(u);
+      } else {
+        // Provide a default guest profile to bypass auth barriers
+        const guestUser = { uid: "guest-uid", email: "guest@example.com", displayName: "Guest User" } as User;
+        const guestProfile: UserProfile = {
+          uid: "guest-uid",
+          email: "guest@example.com",
+          displayName: "Guest User",
+          role: "customer",
+          createdAt: new Date(),
+          preferences: ["Fashion", "Electronics"],
+        };
+        setUser(guestUser);
+        setProfile(guestProfile);
+        setRole("customer");
+        setRetailerProfile(null);
+      }
       setLoading(false);
     });
     return () => unsub();
@@ -124,7 +141,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const signInAsGuest = async (selectedRole: UserRole) => {
+    setLoading(true);
+    const guestUser = { uid: "guest-uid", email: "guest@example.com", displayName: "Guest Explorer" } as User;
+    const guestProfile: UserProfile = {
+      uid: "guest-uid",
+      email: "guest@example.com",
+      displayName: "Guest Explorer",
+      role: selectedRole,
+      createdAt: new Date(),
+      preferences: ["Fashion", "Electronics"],
+    };
+    setUser(guestUser);
+    setProfile(guestProfile);
+    setRole(selectedRole);
+    if (selectedRole === "retailer") {
+      setRetailerProfile({
+        uid: "guest-uid",
+        storeName: "Guest Store",
+        category: "Electronics",
+        location: "Mumbai, India",
+        rating: 4.5,
+        totalSales: 1200,
+        joinedAt: new Date(),
+      } as RetailerProfile);
+    }
+    setLoading(false);
+    toast.success(`Logged in as Guest ${selectedRole === "retailer" ? "Retailer" : "Customer"}`);
+  };
+
   const logout = async () => {
+    if (user?.uid === "guest-uid") {
+      setUser(null);
+      setProfile(null);
+      setRole(null);
+      setRetailerProfile(null);
+      toast.success("Guest session ended");
+      return;
+    }
     await signOut(auth);
     setProfile(null);
     setRole(null);
@@ -133,13 +187,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const refreshProfile = async () => {
-    if (user) await fetchProfile(user);
+    if (user && user.uid !== "guest-uid") await fetchProfile(user);
   };
 
   return (
     <AuthContext.Provider value={{
       user, profile, retailerProfile, role, loading,
-      signInWithGoogle, signInEmail, signUpEmail, logout, refreshProfile,
+      signInWithGoogle, signInEmail, signUpEmail, logout, refreshProfile, signInAsGuest
     }}>
       {children}
     </AuthContext.Provider>

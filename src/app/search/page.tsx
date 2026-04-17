@@ -94,19 +94,27 @@ function SearchContent() {
   return (
     <div className="min-h-screen bg-surface">
       <Navbar />
-      <main id="main-content" className="pt-20 max-w-7xl mx-auto px-4 pb-16">
+      <main id="main-content" className="pt-24 max-w-7xl mx-auto px-4 pb-16">
         {/* Search Bar */}
-        <section className="py-8" aria-label="Product search">
-          <form onSubmit={handleSearch} className="flex gap-3">
-            <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" aria-hidden="true" />
+        <section className="py-12" aria-label="Product search">
+          <form onSubmit={handleSearch} className="flex gap-4 max-w-4xl mx-auto">
+            <div className="flex-1 relative group">
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
               <label htmlFor="search-input" className="sr-only">Search products</label>
-              <input id="search-input" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search across Amazon, Flipkart, Meesho, Myntra..." className="input-field pl-12 text-base" autoComplete="off" />
+              <input 
+                id="search-input" 
+                type="search" 
+                value={query} 
+                onChange={e => setQuery(e.target.value)} 
+                placeholder="Search Amazon, Myntra, Flipkart, Local stores..." 
+                className="w-full pl-14 pr-6 py-5 bg-white border border-gray-200 rounded-[2rem] shadow-card focus:shadow-card-hover focus:outline-none focus:border-primary transition-all text-lg" 
+                autoComplete="off" 
+              />
             </div>
-            <button type="button" onClick={() => setFiltersOpen(!filtersOpen)} className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-white hover:bg-gray-50 transition-colors cursor-pointer font-medium text-gray-700 text-sm" aria-expanded={filtersOpen} aria-label="Toggle filters">
-              <SlidersHorizontal className="w-4 h-4" aria-hidden="true" /> Filters
+            <button type="button" onClick={() => setFiltersOpen(!filtersOpen)} className="flex items-center gap-2 px-6 py-5 rounded-[2rem] border border-gray-200 bg-white hover:bg-gray-50 transition-all cursor-pointer font-bold text-gray-700 shadow-sm" aria-expanded={filtersOpen} aria-label="Toggle filters">
+              <SlidersHorizontal className="w-5 h-5" aria-hidden="true" />
             </button>
-            <button type="submit" className="btn-primary px-6 text-sm">Search</button>
+            <button type="submit" className="btn-primary px-10 rounded-[2rem] text-base font-bold">Search</button>
           </form>
 
           {/* Filters Panel */}
