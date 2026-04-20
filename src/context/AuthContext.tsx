@@ -159,12 +159,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setRetailerProfile({
         uid: "guest-uid",
         storeName: "Guest Store",
-        category: "Electronics",
-        location: "Mumbai, India",
+        ownerName: "Guest Owner",
+        email: "guest@example.com",
+        phone: "+91 9999999999",
+        address: "123 Tech Lane",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400001",
+        categories: ["Electronics", "Fashion"],
+        verified: true,
         rating: 4.5,
-        totalSales: 1200,
-        joinedAt: new Date(),
-      } as RetailerProfile);
+        createdAt: new Date(),
+      });
     }
     setLoading(false);
     toast.success(`Logged in as Guest ${selectedRole === "retailer" ? "Retailer" : "Customer"}`);

@@ -4,6 +4,8 @@
 
 ![Threadly Banner](https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&q=80)
 
+---
+
 ## 🚀 Key Features
 
 ### 🔍 Universal AI Search (Gemini 1.5 Pro)
@@ -38,7 +40,8 @@ Threadly is built using the **Stitch Design System**, a premium UI/UX framework 
 - **AI/ML**: 
   - Google Gemini API (Universal Search & Reasoning)
   - Sarvam AI (Voice Interaction & Automated Calling)
-- **Deployment**: Google Cloud Run / Firebase App Hosting
+- **Runtime**: Node.js 20 (Required for Firebase SDK v11+)
+- **Deployment**: Google Cloud Run (Containerized via Cloud Build)
 
 ---
 
@@ -59,9 +62,9 @@ npm install
 Create a `.env.local` file with the following:
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=...
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=threadlyv1.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=threadlyv1
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=threadlyv1.firebasestorage.app
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
 NEXT_PUBLIC_FIREBASE_APP_ID=...
 GEMINI_API_KEY=...
@@ -75,18 +78,24 @@ npm run dev
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment (GCP Cloud Run)
 
-### Google Cloud Run
-Threadly is containerized and ready for GCP:
+Threadly is containerized and ready for **Google Cloud Platform**. To deploy the latest version to production:
+
+### 1. Initialize GCloud
 ```bash
-gcloud builds submit --config cloudbuild.yaml
+gcloud config set project threadlyv1
 ```
 
-### Firebase Hosting
+### 2. Deploy via Cloud Build
+Run this single command to build the container and deploy to Cloud Run. Replace the placeholders with your actual keys:
+
 ```bash
-firebase deploy
+gcloud builds submit --config cloudbuild.yaml --substitutions=_NEXT_PUBLIC_FIREBASE_API_KEY="YOUR_KEY",_NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="threadlyv1.firebaseapp.com",_NEXT_PUBLIC_FIREBASE_PROJECT_ID="threadlyv1",_NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="threadlyv1.firebasestorage.app",_NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="YOUR_ID",_NEXT_PUBLIC_FIREBASE_APP_ID="YOUR_APP_ID",_NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID="YOUR_MEASUREMENT_ID",_GEMINI_API_KEY="YOUR_GEMINI_KEY",_SARVAM_API_KEY="YOUR_SARVAM_KEY"
 ```
+
+### 3. Post-Deployment (Auth)
+After deployment, add your Cloud Run URL to the **Authorized Domains** in the Firebase Console to enable logins.
 
 ---
 
